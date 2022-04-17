@@ -1,59 +1,73 @@
 <template>
- <div class="container">
-   <Header title="Task Tracker" />
-   <Tasks :tasks="task" />
- </div>
+  <div class="container">
+    <Header title="Task Tracker" />
+    <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
+    <Tasks @delete-task="deleteTask" :tasks="tasks" />
+  </div>
 </template>
 
 <script>
-
-import Header from './components/Header'
-import Tasks from './components/Tasks'
+import Header from "./components/Header";
+import Tasks from "./components/Tasks";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     Tasks,
   },
-  data(){
-    return{
-      task:[]
-    }
+  data() {
+    return {
+      task: [],
+    };
   },
-  created(){
-    this.task = [
+  methods: {
+    deleteTask(id) {
+      if (confirm("Are you sure")) {
+         this.tasks = this.tasks.filter((task) => task.id !== id);
+        // this.tasks = this.tasks.filter(function(task){
+        //   return (task.id !== id)
+        // })
+         console.log(this.tasks);
+      }
+    },
+  //   this.participants = this.participants.filter(function (participant) {
+  // return (participant.cost_center == 2);
+// });
+  },
+  created() {
+    this.tasks = [
       {
-      "id": "1",
-      "text": "Doctors Appointment",
-      "day": "March 5th at 2:30pm",
-      "reminder": true
-    },
-    {
-      "id": "2",
-      "text": "Meeting with boss",
-      "day": "March 6th at 1:30pm",
-      "reminder": true
-    },
-    {
-      "id": "3",
-      "text": "Food shopping",
-      "day": "March 7th at 2:00pm",
-      "reminder": false
-    }
+        id: "1",
+        text: "Doctors Appointment",
+        day: "March 5th at 2:30pm",
+        reminder: true,
+      },
+      {
+        id: "2",
+        text: "Meeting with boss",
+        day: "March 6th at 1:30pm",
+        reminder: true,
+      },
+      {
+        id: "3",
+        text: "Food shopping",
+        day: "March 7th at 2:00pm",
+        reminder: false,
+      },
     ]
-  }
-}
+  },
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .container {
   max-width: 500px;

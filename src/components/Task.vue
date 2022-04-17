@@ -17,7 +17,8 @@ export default {
   },
   methods:{
       onDelete(id){
-          console.log(id)
+        //   we are emmiting a custom event here in this case we call it delete-task and we are passing the id, we are going to send this on Tasks.vue
+          this.$emit('delete-task', id)
       },
   },
 };
