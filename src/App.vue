@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container" v-cloak>
     <Header title="Task Tracker" />
     <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
-    <Tasks @delete-task="deleteTask" :tasks="tasks" />
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
@@ -17,22 +17,24 @@ export default {
   },
   data() {
     return {
-      task: [],
+      tasks: [],
     };
   },
-  methods: {
+  methods: { 
     deleteTask(id) {
       if (confirm("Are you sure")) {
          this.tasks = this.tasks.filter((task) => task.id !== id);
-        // this.tasks = this.tasks.filter(function(task){
-        //   return (task.id !== id)
-        // })
-         console.log(this.tasks);
+        this.tasks = this.tasks.filter(function(task){
+          return (task.id !== id)
+        })
+         console.table(this.tasks);
+        // console.log(id)
       }
     },
-  //   this.participants = this.participants.filter(function (participant) {
-  // return (participant.cost_center == 2);
-// });
+    toggleReminder(id){
+      // we are updating the task by updating the reminder to the opposite of the existing reminder, we are checking the the task.id that we map and if its the same with the id we are gonna update in the the opposite of the reminder else were not gonna do anything
+      this.tasks = this.tasks.map((task)=> task.id === id ? {...task, reminder: !task.reminder} : task )
+    }
   },
   created() {
     this.tasks = [
@@ -65,6 +67,9 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+[v-cloak]{
+  display: none;
 }
 body {
   font-family: "Poppins", sans-serif;

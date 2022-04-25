@@ -1,6 +1,6 @@
 <template>
 <!-- we vbind/v-if the task.reminder here if its true it will add the 'reminder' class and we are saying we also want the task class, the css class are at the bottom  -->
-  <div :class="[task.reminder ? 'reminder' : '', 'task' ]">
+  <div @dblclick="$emit('toggle-reminder', task.id)" :class="[task.reminder ? 'reminder' : '', 'task' ]">
     <h3>
       {{ task.text }}
       <i @click="onDelete(task.id)" class="fas fa-trash"></i>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-export default {
+export default { 
   name: "TaskComponent",
   props: {
     task: Object,
