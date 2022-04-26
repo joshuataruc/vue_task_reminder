@@ -1,9 +1,15 @@
 <template>
   <div class="container" v-cloak>
-    <Header title="Task Tracker" />
+    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" />
     <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
-    <AddTask @Add-Task="addTask" />
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
+    <div v-if="showAddTask">
+      <AddTask @Add-Task="addTask" :showTaskFormBtns="showAddTask" />
+    </div>
+    <Tasks
+      @toggle-reminder="toggleReminder"
+      @delete-task="deleteTask"
+      :tasks="tasks"
+    />
   </div>
 </template>
 
@@ -21,9 +27,13 @@ export default {
   data() {
     return {
       tasks: [],
+      showAddTask: false,
     };
   },
-  methods: { 
+  methods: {
+    toggleAddTask(){
+      this.showAddTask = !this.showAddTask
+    },
     addTask(task){
       this.tasks=[...this.tasks, task]
     },
@@ -74,7 +84,7 @@ export default {
   margin: 0;
   padding: 0;
 }
-[v-cloak]{
+[v-cloak] {
   display: none;
 }
 body {

@@ -64,7 +64,23 @@ export default {
 <style scoped>
 .add-form {
   margin-bottom: 40px;
+  animation-name: entrance;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
 }
+
+@keyframes entrance {
+  0%{
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+
 .form-control {
   margin: 20px 0;
 }
