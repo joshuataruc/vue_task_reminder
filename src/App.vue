@@ -2,7 +2,7 @@
   <div class="container" v-cloak>
     <Header title="Task Tracker" />
     <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
-    <AddTask />
+    <AddTask @Add-Task="addTask" />
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
@@ -24,13 +24,16 @@ export default {
     };
   },
   methods: { 
+    addTask(task){
+      this.tasks=[...this.tasks, task]
+    },
     deleteTask(id) {
       if (confirm("Are you sure")) {
          this.tasks = this.tasks.filter((task) => task.id !== id);
         this.tasks = this.tasks.filter(function(task){
           return (task.id !== id)
         })
-         console.table(this.tasks);
+         //console.table(this.tasks);
         // console.log(id)
       }
     },

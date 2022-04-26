@@ -1,10 +1,9 @@
 <template>
-  <form @submit="onSubmit" class="add-form">
+  <form @submit="onSubmit" class="add-form" novalidate="true">
     <div class="form-control">
       <label>Task</label>
       <input type="text" v-model="text" name="text" placeholder="Add Task" />
     </div>
-    {{ text }}
     <div class="form-control">
       <label>Day & Time</label>
       <input
@@ -28,10 +27,36 @@ export default {
   name: "AddTaskComponent",
   data() {
     return {
+      errors: [],
       text: "",
       day: "",
       reminder: false,
     };
+  },
+  methods: {
+    onSubmit(e) {
+     
+      if (!this.text) {
+        alert("Text is Required");
+      }
+      if (!this.day) {
+        alert("Day is Required");
+      }
+
+      const newTask = {
+        id: Math.floor(Math.random()* 100000),
+        text: this.text,
+        day: this.day,
+        reminder:this.reminder
+      }
+      this.text = ''
+      this.day = ''
+      this.reminder = ''
+
+      this.$emit('Add-Task', newTask)
+
+      e.preventDefault();
+    },
   },
 };
 </script>
