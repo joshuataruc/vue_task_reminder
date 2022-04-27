@@ -82,13 +82,14 @@ export default {
   }
 }
 
-
 .form-control {
   margin: 20px 0;
 }
 .form-control label {
   display: block;
 }
+
+
 .form-control input {
   width: 100%;
   height: 40px;
