@@ -38,9 +38,11 @@ export default {
      
       if (!this.text) {
         alert("Text is Required");
+        
       }
       if (!this.day) {
         alert("Day is Required");
+        return false
       }
 
       const newTask = {

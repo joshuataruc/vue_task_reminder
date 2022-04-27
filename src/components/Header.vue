@@ -3,7 +3,7 @@
         <h1>{{title}}</h1>
         <Button 
         @toggle-add-task="$emit('toggle-add-task')" :text="showTaskFormBtns ? 'Close' : 'Add Task' " 
-        color="#207567" />
+        :color="showTaskFormBtns ? 'red' : '#207567'  " />
     </header>
 </template>
 

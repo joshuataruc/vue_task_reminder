@@ -1,9 +1,9 @@
 <template>
   <div class="container" v-cloak>
-    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" />
+    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showTaskFormBtns="showAddTask" />
     <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
     <div v-if="showAddTask">
-      <AddTask @Add-Task="addTask" :showTaskFormBtns="showAddTask" />
+      <AddTask @Add-Task="addTask" />
     </div>
     <Tasks
       @toggle-reminder="toggleReminder"
