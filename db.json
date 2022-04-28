@@ -8,15 +8,15 @@
     },
     {
       "id": "2",
-      "text": "Meeting with boss",
+      "text": "Meeting with bosses",
       "day": "March 6th at 1:30pm",
       "reminder": true
     },
     {
-      "id": "3",
-      "text": "Food shopping",
-      "day": "March 7th at 2:00pm",
-      "reminder": false
+      "text": "asdasd",
+      "day": "test date",
+      "reminder": false,
+      "id": "Q899G_F"
     }
   ]
 }

@@ -1,6 +1,10 @@
 <template>
   <div class="container" v-cloak>
-    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showTaskFormBtns="showAddTask" />
+    <Header
+      @toggle-add-task="toggleAddTask"
+      title="Task Tracker"
+      :showTaskFormBtns="showAddTask"
+    />
     <!-- we are getting the @delete-task from the Tasks.vue and we are gonna create the deleteTask at the methods here -->
     <div v-if="showAddTask">
       <AddTask @Add-Task="addTask" />
@@ -31,48 +35,63 @@ export default {
     };
   },
   methods: {
-    toggleAddTask(){
-      this.showAddTask = !this.showAddTask
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
     },
-    addTask(task){
-      this.tasks=[...this.tasks, task]
+    async addTask(task) {
+      const res = await fetch("api/task", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+      })
+
+      const data = await res.json();
+
+      this.tasks = [...this.tasks, data];
     },
-    deleteTask(id) {
+    async deleteTask(id) {
       if (confirm("Are you sure")) {
-         this.tasks = this.tasks.filter((task) => task.id !== id);
-        this.tasks = this.tasks.filter(function(task){
-          return (task.id !== id)
-        })
-         //console.table(this.tasks);
-        // console.log(id)
+        const res = await fetch(`api/task/${id}`, {
+          method: "Delete",
+        });
+        res.status === 200
+          ? (this.tasks = this.tasks.filter((task) => task.id !== id))
+          : console.log("Error Deleting");
       }
     },
-    toggleReminder(id){
-      // we are updating the task by updating the reminder to the opposite of the existing reminder, we are checking the the task.id that we map and if its the same with the id we are gonna update in the the opposite of the reminder else were not gonna do anything
-      this.tasks = this.tasks.map((task)=> task.id === id ? {...task, reminder: !task.reminder} : task )
-    }
+    async toggleReminder(id) {
+      const taskToggle = await this.fetchTask(id)
+      const updTask = { ...taskToggle, reminder: !taskToggle.reminder }
+      const res = await fetch(`api/task/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updTask),
+      })
+      const data = await res.json()
+
+      this.tasks = this.tasks.map((task) =>
+        task.id === id ? { ...task, reminder: data.reminder } : task
+      )
+    },
+    async fetchTasks() {
+      const res = await fetch("/api/task");
+
+      const data = await res.json();
+      return data;
+    },
+    async fetchTask(id) {
+      const res = await fetch(`/api/task/${id}`);
+
+      const data = await res.json();
+      return data;
+    },
   },
-  created() {
-    this.tasks = [
-      {
-        id: "1",
-        text: "Doctors Appointment",
-        day: "March 5th at 2:30pm",
-        reminder: true,
-      },
-      {
-        id: "2",
-        text: "Meeting with boss",
-        day: "March 6th at 1:30pm",
-        reminder: true,
-      },
-      {
-        id: "3",
-        text: "Food shopping",
-        day: "March 7th at 2:00pm",
-        reminder: false,
-      },
-    ]
+  async created() {
+    this.tasks = await this.fetchTasks();
   },
 };
 </script>
