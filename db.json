@@ -10,13 +10,13 @@
       "id": "2",
       "text": "Meeting with bosses",
       "day": "March 6th at 1:30pm",
-      "reminder": true
+      "reminder": false
     },
     {
-      "text": "asdasd",
-      "day": "test date",
-      "reminder": false,
-      "id": "Q899G_F"
+      "text": "test",
+      "day": "test",
+      "reminder": true,
+      "id": "3HQlrg7"
     }
   ]
 }
